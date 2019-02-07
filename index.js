@@ -1,6 +1,7 @@
 let app = require("express")();
 let http = require("http").Server(app);
 let io = require("socket.io")(http);
+let port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -21,6 +22,6 @@ io.on("connection", socket => {
     io.emit("chat message", msg);
   });
 });
-http.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+http.listen(port, () => {
+  console.log("listening on :" + port);
 });

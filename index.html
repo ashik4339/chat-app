@@ -1,16 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>live anonymous chat</title>
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      ul#messages {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 50%;
+        margin: auto;
+        scroll-behavior: auto;
+        height: 75vh;
+        overflow: scroll;
+      }
+
+      ul#messages li:nth-child(odd) {
+        background-image: linear-gradient(-45deg, #ffc796 0%, #ff6b95 100%);
+      }
+
+      ul#messages li {
+        background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+        color: #fff;
+        padding: 9px 17px;
+        text-transform: capitalize;
+        border-radius: 50px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      form {
+        background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        padding: 20px;
+        width: 47%;
+        position: fixed;
+        bottom: 5%;
+        left: 25%;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      form input {
+        border: 0;
+        padding: 15px;
+        border-radius: 5px 0 0 5px;
+        width: 50%;
+      }
+
+      form button {
+        color: #fff;
+        border: 0;
+        font-size: 16px;
+        padding: 13px 35px;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        background-image: linear-gradient(to right, #f9d423 0%, #ff4e50 100%);
+      }
     </style>
   </head>
   <body>
@@ -21,19 +64,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        $(function () {
-            var socket = io();
-            $('form').submit(function(e){
-            e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-            });
-            socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
-            });
+      $(function() {
+        var socket = io();
+        $("form").submit(function(e) {
+          e.preventDefault(); // prevents page reloading
+          socket.emit("chat message", $("#m").val());
+          $("#m").val("");
+          return false;
         });
-    </script>   
-
+        socket.on("chat message", function(msg) {
+          $("#messages").append($("<li>").text(msg));
+        });
+      });
+    </script>
   </body>
 </html>
